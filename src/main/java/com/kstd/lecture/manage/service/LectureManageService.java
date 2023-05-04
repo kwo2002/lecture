@@ -46,7 +46,7 @@ public class LectureManageService {
   @Transactional(readOnly = true)
   public LectureEnrolledEmployeesDto findEnrolledEmployeesByLecture(Long lectureId) {
     EntityLecture entityLecture =
-            this.lectureRepository.findByIdAndUseFlagIsTrueOrderByRegisteredAtDesc(lectureId).orElseThrow(() -> new LectureNotFoundException("존재하지 않는 강의입니다."));
+            this.lectureRepository.findByIdAndUseFlagIsTrue(lectureId).orElseThrow(() -> new LectureNotFoundException("존재하지 않는 강의입니다."));
 
     List<EntityEnrolledLectureEmployee> enrolledLectureEmployees = entityLecture.getEnrolledLectureEmployee()
             .stream()

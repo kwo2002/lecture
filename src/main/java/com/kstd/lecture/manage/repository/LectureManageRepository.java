@@ -12,6 +12,6 @@ public interface LectureManageRepository extends JpaRepository<EntityLecture, Lo
   List<EntityLecture> findByUseFlagIsTrueOrderByRegisteredAtDesc();
 
   @EntityGraph(attributePaths = {"enrolledLectureEmployee", "enrolledLectureEmployee.employee"})
-  Optional<EntityLecture> findByIdAndUseFlagIsTrueOrderByRegisteredAtDesc(Long id);
+  Optional<EntityLecture> findByIdAndUseFlagIsTrue(Long id);
 
 }

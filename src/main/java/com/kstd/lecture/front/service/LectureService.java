@@ -81,8 +81,7 @@ public class LectureService {
     this.lectureRepository.save(entityLecture);
 
     EntityEnrolledLectureEmployee entityEnrolledLectureEmployee = new EntityEnrolledLectureEmployee();
-    entityEnrolledLectureEmployee.setLecture(entityLecture);
-    entityEnrolledLectureEmployee.setEmployee(entityEmployee);
+    entityEnrolledLectureEmployee.setEmployeeAndLecture(entityEmployee, entityLecture);
     entityEnrolledLectureEmployee.setUseFlag(true);
     entityEnrolledLectureEmployee.setRegisteredUserId(entityEmployee.getId());
     this.enrolledLectureEmployeeRepository.save(entityEnrolledLectureEmployee);

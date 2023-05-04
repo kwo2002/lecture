@@ -20,6 +20,23 @@ public class EntityEnrolledLectureEmployee extends BaseEntity {
   @JoinColumn(name = "lecture_id")
   private EntityLecture lecture;
 
-  private boolean useFlag;
+  private boolean useFlag = true;
+  public void setEmployeeAndLecture(EntityEmployee employee, EntityLecture lecture) {
+    if (this.employee != null) {
+      this.employee.getEnrolledLectureEmployee().remove(this);
+    }
+    this.employee = employee;
+    if (!employee.getEnrolledLectureEmployee().contains(this)) {
+      employee.getEnrolledLectureEmployee().add(this);
+    }
+
+    if (this.lecture != null) {
+      this.lecture.getEnrolledLectureEmployee().remove(this);
+    }
+    this.lecture = lecture;
+    if (!lecture.getEnrolledLectureEmployee().contains(this)) {
+      lecture.getEnrolledLectureEmployee().add(this);
+    }
+  }
 
 }
