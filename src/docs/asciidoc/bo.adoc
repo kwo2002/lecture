@@ -1,0 +1,11 @@
+[[lecture]]
+=== 전체 강의 목록
+operation::get_lecture[snippets='http-request,http-response,response-fields']
+
+[[create_lecture]]
+=== 강의 등록
+operation::post_lecture[snippets='http-request,http-response,request-fields,response-fields']
+
+[[enrolled_employees]]
+=== 강의 신청자 목록
+operation::get_enrolled-employees[snippets='http-request,http-response,path-parameters,response-fields']

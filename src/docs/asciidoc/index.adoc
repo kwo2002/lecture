@@ -1,0 +1,20 @@
+= 강연 신청 플랫폼
+ChoiBin;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+
+[[mediatype]]
+=== Media Type
+이 웹 서비스는 `application/json` 미디어 유형으로 리소스를 노출합니다.
+
+[[bakoffice]]
+==  백오피스 API
+include::bo.adoc[]
+
+[[front]]
+== 프론트 API
+include::front.adoc[]

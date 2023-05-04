@@ -1,0 +1,19 @@
+[[avail_lecture]]
+=== 강연 목록
+operation::get_lecture[snippets='http-request,http-response,response-fields']
+
+[[enroll_lecture]]
+=== 강연 신청
+operation::post_enroll-lecture[snippets='http-request,http-response,path-parameters,response-fields']
+
+[[enrolled_lecture_by_employee]]
+=== 사번별 강연 신청 목록
+operation::get_enrolled-lectures-by-employee-no[snippets='http-request,http-response,path-parameters,response-fields']
+
+[[cancel_enroll]]
+=== 강연 신청 취소
+operation::delete_enroll-lecture[snippets='http-request,http-response,path-parameters,response-fields']
+
+[[favorite_lectures]]
+=== 인기 강연 목록 - 최근 3일간 강연신청 많은 순서 정렬
+operation::get_favorite-lecture[snippets='http-request,http-response,response-fields']
