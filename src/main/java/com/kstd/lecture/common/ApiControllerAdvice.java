@@ -25,7 +25,7 @@ public class ApiControllerAdvice {
     public ApiResult requestValidException(MethodArgumentNotValidException e) {
         String message = e.getBindingResult().getAllErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                .collect(joining("\n"));
+                .collect(joining(", "));
 
         return error(message, HttpStatus.BAD_REQUEST);
     }

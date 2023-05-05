@@ -13,8 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LectureManageService {
@@ -48,7 +49,8 @@ public class LectureManageService {
     EntityLecture entityLecture =
             this.lectureRepository.findByIdAndUseFlagIsTrue(lectureId).orElseThrow(() -> new LectureNotFoundException("존재하지 않는 강의입니다."));
 
-    List<EntityEnrolledLectureEmployee> enrolledLectureEmployees = entityLecture.getEnrolledLectureEmployee()
+    List<EntityEnrolledLectureEmployee> enrolledLectureEmployees = Optional.ofNullable(entityLecture.getEnrolledLectureEmployee())
+            .orElse(Collections.emptyList())
             .stream()
             .filter(EntityEnrolledLectureEmployee::isUseFlag)
             .toList();
@@ -56,18 +58,18 @@ public class LectureManageService {
     LectureEnrolledEmployeesDto lectureEnrolledEmployeesDto = new LectureEnrolledEmployeesDto();
     lectureEnrolledEmployeesDto.setLecture(this.modelMapper.map(entityLecture, LectureDto.class));
 
-    List<EnrolledEmployeeDto> enrolledEmployeeDtoList = new ArrayList<>();
-    for (EntityEnrolledLectureEmployee enrolledLectureEmployee : enrolledLectureEmployees) {
-      EntityEmployee employee = enrolledLectureEmployee.getEmployee();
-      EnrolledEmployeeDto enrolledEmployeeDto = new EnrolledEmployeeDto();
-      enrolledEmployeeDto.setEmployeeId(employee.getId());
-      enrolledEmployeeDto.setEmployeeNo(employee.getEmployeeNo());
-      enrolledEmployeeDto.setRegisteredAt(enrolledLectureEmployee.getRegisteredAt());
-      enrolledEmployeeDto.setUseFlag(enrolledLectureEmployee.isUseFlag());
-      enrolledEmployeeDtoList.add(enrolledEmployeeDto);
-    }
+    List<EnrolledEmployeeDto> enrolledEmployeeDtoList = enrolledLectureEmployees.stream()
+            .map(e -> {
+              EntityEmployee employee = e.getEmployee();
+              EnrolledEmployeeDto enrolledEmployeeDto = new EnrolledEmployeeDto();
+              enrolledEmployeeDto.setEmployeeId(employee.getId());
+              enrolledEmployeeDto.setEmployeeNo(employee.getEmployeeNo());
+              enrolledEmployeeDto.setRegisteredAt(e.getRegisteredAt());
+              enrolledEmployeeDto.setUseFlag(e.isUseFlag());
+              return enrolledEmployeeDto;
+            })
+            .toList();
 
-    lectureEnrolledEmployeesDto.setEnrolledEmployees(enrolledEmployeeDtoList);
     lectureEnrolledEmployeesDto.setEnrolledEmployees(enrolledEmployeeDtoList);
 
     return lectureEnrolledEmployeesDto;
